@@ -1,0 +1,22 @@
+
+header {
+    text-align: center;
+    padding: 2%;
+    background-color: aquamarine;
+}
+
+body {
+    background-color: bisque;
+}
+
+.team {
+    margin: 5%;
+   justify-content: center; 
+}
+.card {
+    margin: 3%;
+    margin-top: 10%;
+    width: 15rem;
+    height: 20rem;
+}
+
