@@ -2,11 +2,16 @@
 header {
     text-align: center;
     padding: 2%;
-    background-color: aquamarine;
+    background-color: #b2b8a3;
+    color: #faf3e0;
+}
+
+.display-4 {
+    font-size: 4.5rem;
 }
 
 body {
-    background-color: bisque;
+    background-color: #eabf9f;
 }
 
 .team {
@@ -17,6 +22,22 @@ body {
     margin: 3%;
     margin-top: 10%;
     width: 15rem;
-    height: 20rem;
+    height: 15rem;
+}
+
+.card-header {
+    background-color: #b68973;
+    color: #faf3e0;
+}
+
+.card-body {
+    background-color: #faf3e0;
+}
+
+.list-group-item {
+    font-size: .75rem;
+    background-color: #faf3e0;
+    color: #3a6351;
+    font-weight: 500;
 }
 
