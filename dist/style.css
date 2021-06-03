@@ -30,6 +30,15 @@ body {
     color: #faf3e0;
 }
 
+.icon {
+    display: flex;
+}
+
+img {
+    height: 35px;
+    color: white;
+}
+
 .card-body {
     background-color: #faf3e0;
 }
