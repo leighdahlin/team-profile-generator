@@ -2,7 +2,8 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern")
+const Intern = require("./lib/Intern");
+const { Color } = require("chalk");
 const manager = [];
 const engineers = [];
 const interns = []
@@ -31,7 +32,7 @@ const generatorQs = ()=> {
             const fileName = manager[0].officeNumber + "-" + manager[0].name + ".html";
             console.log(fileName)
 
-            fs.writeFile(fileName,baseHtml(managerHtml(manager)), (err) =>
+            fs.writeFile(fileName,baseHtml(managerHtml(manager),generateEngHtml(engineers),generateInternHtml(interns)), (err) =>
             err ? console.log(manager) : console.log('Success!'));
         }
 
@@ -45,7 +46,7 @@ async function createManager() {
     // await managerHtml(newManager);
     // await console.log(newManager);
     await manager.push(newManager);
-    await console.log(manager)
+    // await console.log(manager)
     // await console.log(teamMembers)
     await generatorQs();
 }
@@ -56,7 +57,7 @@ async function createEngineer() {
     await newEngineer.getGithub();
     // await console.log(newEngineer);
     await engineers.push(newEngineer);
-    // await console.log(teamMembers)
+    // await console.log(engineers)
     await generatorQs();
 }
 
@@ -69,11 +70,8 @@ async function createIntern() {
     // await console.log(teamMembers)
     await generatorQs();
 }
-//,engineerHtml,internHtml
-// ${engineerHtml}
-// ${internHtml}
 
-baseHtml = (managerHtml) => 
+baseHtml = (managerHtml,engineerHtml,internHtml) => 
     `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -95,6 +93,8 @@ baseHtml = (managerHtml) =>
         <main>
             <div class="row team">
                 ${managerHtml}
+                ${engineerHtml}
+                ${internHtml}
             </div>
         </main>
     </body>
@@ -102,7 +102,6 @@ baseHtml = (managerHtml) =>
 
 
 managerHtml = (managerInfo) => 
-    
     `<div class="col-sm-4">
         <div class="card">
             <div class="card-header">
@@ -118,6 +117,60 @@ managerHtml = (managerInfo) =>
             </div>
       </div>
     </div>`
+
+engineerHtml = (engInfo) =>
+`<div class="col-sm-4">
+    <div class="card">
+        <div class="card-header">
+            <h3>${engInfo.name}</h3>
+            <div class="icon"><img src="../Images/glasses-icon.png"><h4>Engineer</h4></div>
+        </div>
+        <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: ${engInfo.id}</li>
+            <li class="list-group-item"><a href="mailto:${engInfo.email}">${engInfo.email}</a></li>
+            <li class="list-group-item">Github: <a href="https://github.com/${engInfo.gitHub}">${engInfo.gitHub}</a></li>
+        </ul>
+        </div>
+    </div>
+</div>`
+
+internHtml = (intInfo) =>
+`<div class="col-sm-4">
+    <div class="card">
+        <div class="card-header">
+            <h3>${intInfo.name}</h3>
+            <div class="icon"><img src="../Images/avatar.png"><h4>Intern</h4></div>
+        </div>
+        <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: ${intInfo.id}</li>
+            <li class="list-group-item"><a href="mailto:${intInfo.email}">${intInfo.email}</a></li>
+            <li class="list-group-item">School: ${intInfo.school}</li>
+        </ul>
+        </div>
+    </div>
+</div>`
+
+function generateEngHtml (profiles) {
+    const engHtml = [];
+    console.log(profiles)
+    for (i=0; i< profiles.length; i++) {
+        engHtml.push(engineerHtml(profiles[i]));
+        
+    }
+    return engHtml.join()
+}
+
+function generateInternHtml (profiles) {
+    const intHtml = [];
+    console.log(profiles)
+    for (i=0; i< profiles.length; i++) {
+        intHtml.push(internHtml(profiles[i]));
+        
+    }
+    return intHtml.join("")
+}
 
 
 //starts the profile generator by first getting manager information and then running the choices of adding or finishing
