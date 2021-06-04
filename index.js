@@ -9,6 +9,7 @@ const engineers = [];
 const interns = []
 
 const generatorQs = ()=> {
+//inquirer prompt to determine if the user wants to add a teammate or finish buidling the team
     return inquirer.prompt([
         {
             type: 'list',
@@ -22,16 +23,18 @@ const generatorQs = ()=> {
         },
     ])
     .then((answer) => {
+        //if the user wants to add an engineer, it runs the funtion to create an engineer profile
         if(answer.create === "Add an engineer") {
             createEngineer();
+        //if the user wants to add an intern, it runs the funtion to create an intern profile
         } else if (answer.create === "Add an intern") {
             createIntern();
         } else {
-            // console.log(teamMembers)
-            //name the file a combiation of the office number and manager's name
+            //names the file a combiation of the office number and manager's name
             const fileName = manager[0].officeNumber + "-" + manager[0].name + ".html";
-            console.log(fileName)
 
+            //creates a html file using the file name genrates and runs the baseHtml function to put the html together
+            //the mangagerHtml, generateEngHtml and generateIntern Html functions are triggered within the baseHtml function to get the html for each profile
             fs.writeFile(fileName,baseHtml(managerHtml(manager),generateEngHtml(engineers),generateInternHtml(interns)), (err) =>
             err ? console.log(manager) : console.log('Success!'));
         }
@@ -39,19 +42,15 @@ const generatorQs = ()=> {
     })
 }
 
-//function to use the Manager subclass to create an object for the manager and push it into the teamMember's array
+//function to use the Manager subclass to create an object for the manager and push it into the manager array
 async function createManager() {
     const newManager = await new Manager();
     await newManager.getOfficeNumber();
-    // await managerHtml(newManager);
-    // await console.log(newManager);
     await manager.push(newManager);
-    // await console.log(manager)
-    // await console.log(teamMembers)
     await generatorQs();
 }
 
-//function to use the Engineer subclass to create an object for the manager and push it into the teamMember's array
+//function to use the Engineer subclass to create an object for the manager and push it into the engineers array
 async function createEngineer() {
     const newEngineer = await new Engineer();
     await newEngineer.getGithub();
@@ -61,7 +60,7 @@ async function createEngineer() {
     await generatorQs();
 }
 
-//function to use the Intern subclass to create an object for the manager and push it into the teamMember's array
+//function to use the Intern subclass to create an object for the manager and push it into the interns array
 async function createIntern() {
     const newIntern = await new Intern();
     await newIntern.getSchool();
@@ -71,6 +70,7 @@ async function createIntern() {
     await generatorQs();
 }
 
+//html outline for html file, inserts the manager, engineer and intern profiles in order
 baseHtml = (managerHtml,engineerHtml,internHtml) => 
     `<!DOCTYPE html>
     <html lang="en">
@@ -100,7 +100,7 @@ baseHtml = (managerHtml,engineerHtml,internHtml) =>
     </body>
     </html>`
 
-
+//html for the manager profile, uses the manager array to populate the html
 managerHtml = (managerInfo) => 
     `<div class="col-sm-4">
         <div class="card">
@@ -118,6 +118,7 @@ managerHtml = (managerInfo) =>
       </div>
     </div>`
 
+//html for the engineer profile, this function is triggered within the generateEngHtml function
 engineerHtml = (engInfo) =>
 `<div class="col-sm-4">
     <div class="card">
@@ -135,6 +136,7 @@ engineerHtml = (engInfo) =>
     </div>
 </div>`
 
+//html for the intern profile, this function is triggered within the generateIntHtml function
 internHtml = (intInfo) =>
 `<div class="col-sm-4">
     <div class="card">
@@ -152,16 +154,20 @@ internHtml = (intInfo) =>
     </div>
 </div>`
 
+//function to generate the engineer profile html by going through each item in the engineers array
 function generateEngHtml (profiles) {
+    //empty array to push each profile into
     const engHtml = [];
     console.log(profiles)
     for (i=0; i< profiles.length; i++) {
         engHtml.push(engineerHtml(profiles[i]));
         
     }
+    //joins each item in the array
     return engHtml.join()
 }
 
+//function to generate the intern profile html by going through each item in the interns array
 function generateInternHtml (profiles) {
     const intHtml = [];
     console.log(profiles)
@@ -171,7 +177,6 @@ function generateInternHtml (profiles) {
     }
     return intHtml.join("")
 }
-
 
 //starts the profile generator by first getting manager information and then running the choices of adding or finishing
 createManager();
