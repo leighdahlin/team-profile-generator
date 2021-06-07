@@ -10,6 +10,7 @@ This project generates an html page of your team based on input from the user ab
  - [Installation](#installation)
  - [Usage](#usage)
  - [Features](#features)
+ - [Screenshot](#screenshot)
  - [License](#license)
  - [Questions](#questions)
  
@@ -18,7 +19,7 @@ To use the README generator, you must install Node.js and the Inquirer npm packa
 
 ## Usage
 View the video below for usage:
-![gif of Team Profile Generator](./GIF/READMEgenerator.gif)
+![gif of Team Profile Generator](./GIF/TeamProfileGenerator.gif)
 
 ## Features
 
@@ -31,6 +32,10 @@ This project features:
  - Classes initialized using inquirer prompts
  - Professional looking html page of team based on user input
  - Automatically generate's cards for each member of the team and formats them into the html page in order
+ - Each card includes an icon for each type of employee: Manager, Engineer or Intern
+
+## Screenshot
+![Screenshot of example HTML page](./Images/html-page-screenshot.png)
 
 ## License
 Copyright <2021> <COPYRIGHT Leigh C Dahlin>
