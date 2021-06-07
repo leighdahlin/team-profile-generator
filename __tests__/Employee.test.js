@@ -2,40 +2,23 @@
 const inquirer = require('inquirer');
 const Employee = require('../lib/employee');
 
+//mock inquirer to test class
 jest.mock('inquirer')
 
-
+//testing Employee class initialization which uses inquirer prompts
 describe('Initilization', () => {
     it("user input", async () => {
+        //mocking answers to inquirer prompts
         inquirer.prompt = jest.fn().mockResolvedValue({name: 'Bob', id: '1', email: "bob@bob.com", role: "employee"})
-        const bob = new Employee;
 
+        //making new Employee class of bob
+        const bob = new Employee;
+        
+        //expect the bob object to equal the inquirer prompts
         await expect(bob).resolves.toEqual({name: 'Bob', id: '1', email: "bob@bob.com", role: "employee"})
+
 
     });
 
 });
-
-describe("Validation, are the values expected?", () => {
-    it("Should throw an error if name provided is not string value", async ()=> {
-        inquirer.prompt = jest.fn().mockResolvedValue({name: '1', id: 'Bob', email: "bob.com", role: "employee"})
-        // const bob = await new Employee;
-
-        const error = await new Error ("Please enter the engineer\'s name");
-
-        const cb = () => new Employee
-
-        await expect(cb).toThrow(error)
-    });
-    // it("Should throw an error if id provided is not a number", ()=> {
-    //     const invalidId = "John";
-    //     const error = new Error ("Expected parameter id to be non-empty number");
-
-    //     const cb = () => new Employee("John", invalidId, "john@test.com")
-
-    //     expect(cb).toThrow(error);
-    // })
-}) 
-
-//additional tests: test email validation
-//test formulas
+    
